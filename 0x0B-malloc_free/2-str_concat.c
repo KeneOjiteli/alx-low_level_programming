@@ -1,46 +1,43 @@
-#include<stdlib.h>
-
+#include "main.h"
+#include <stdlib.h>
+#include <stdio.h>
 /**
- * str_concat - a function ...
- * @s1: the chaine
- * @s2: the chaine
+ * str_concat - concatenates 2 strings
  *
- * Return: 1 or 0
+ * @s1: first string
+ * @s2: string to add to end of of first string
+ *
+ * Return: pointer to newly allocated string concatenation
  */
-
-char  *str_concat(char *s1, char *s2)
+char *str_concat(char *s1, char *s2)
 {
-	char *src;
-	int len1 = 0, i = 0, len2 = 0, j = 0;
+	unsigned int size1 = 0, size2 = 0;
+	char *ptr, *ret;
 
-	if (s1 == NULL && s2 == NULL)
+	ptr = s1;
+	if (s1)
+		while (*ptr++)
+			size1++;
+	else
+		s1 = "";
+
+	ptr = s2;
+	if (s2)
+		while (*ptr++)
+			size2++;
+	else
+		s2 = "";
+
+	ret = malloc(size1 + size2 + 1);
+	if (!ret)
 		return (NULL);
-	if (s1 == NULL && s2 != NULL)
-		return (s2);
-	if (s1 != NULL && s2 == NULL)
-		return (s1);
 
-	while (s1[len1])
-		len1++;
+	ptr = ret;
+	while (*s1)
+		*ptr++ = *s1++;
+	while (*s2)
+		*ptr++ = *s2++;
+	*ptr = 0;
 
-	while (s2[len2])
-		len2++;
-	src = malloc((len1 + len2 + 1) * sizeof(char));
-	if (src != NULL)
-	{
-		while (s1[i])
-		{
-			src[i] = s1[i];
-			i++;
-		}
-
-		while (s2[j])
-		{
-			src[i] = s2[j];
-			i++;
-			j++;
-		}
-		src[i] = '\0';
-	}
-	return (src);
+	return (ret);
 }
